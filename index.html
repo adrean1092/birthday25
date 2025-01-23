@@ -18,7 +18,6 @@
             color: #fff;
             padding: 20px;
             text-align: center;
-            position: relative;
         }
         nav {
             display: flex;
@@ -43,14 +42,10 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .slideshow-container {
-            max-width: 100%;
-            position: relative;
-            margin: auto;
-            overflow: hidden;
-        }
-        .slides { display: none; width: 70%;
-            border-radius: 8px;
+        .countdown {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
         }
         footer {
             text-align: center;
@@ -75,20 +70,56 @@
         .contact-buttons a.instagram {
             background: #E1306C;
         }
+        .slideshow-container img {
+            display: none;
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .slideshow-container img.active {
+            display: block;
+        }
     </style>
     <script>
-        let slideIndex = 0;
-        function showSlides() {
-            let slides = document.getElementsByClassName("slides");
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
+        document.addEventListener("DOMContentLoaded", function () {
+            // Countdown Timer
+            function updateCountdown() {
+                const birthday = new Date("January 27, 2025 00:00:00").getTime();
+                const now = new Date().getTime();
+                const timeLeft = birthday - now;
+
+                if (timeLeft <= 0) {
+                    document.getElementById("countdown").innerHTML = "🎉 It's My Birthday Today! 🎉";
+                    clearInterval(interval); // Stop updating after the birthday
+                    return;
+                }
+
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % 1000) / 1000);
+
+                document.getElementById("countdown").innerHTML =
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
             }
-            slideIndex++;
-            if (slideIndex > slides.length) { slideIndex = 1; }
-            slides[slideIndex-1].style.display = "block";
-            setTimeout(showSlides, 3000); // Change slide every 3 seconds
-        }
-        document.addEventListener("DOMContentLoaded", showSlides);
+
+            updateCountdown();
+            const interval = setInterval(updateCountdown, 1000);
+
+            // Slideshow Functionality
+            let slideIndex = 0;
+            const slides = document.querySelectorAll(".slides");
+
+            function showSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.remove("active");
+                    if (index === slideIndex) slide.classList.add("active");
+                });
+                slideIndex = (slideIndex + 1) % slides.length;
+            }
+
+            showSlides();
+            setInterval(showSlides, 3000); // Change slide every 3 seconds
+        });
     </script>
 </head>
 <body>
@@ -96,7 +127,7 @@
 <header>
     <h1>Welcome to Adrean Cheruiyot's Birthday Website</h1>
     <p>🎉 Join me in celebrating another year of adventure, learning, and achievements! 🎉</p>
-    <p>I’m a passionate cybersecurity analyst with expertise in protecting digital landscapes and navigating the complexities of modern technology. As a proud Arsenal FC supporter, I believe in strategy, teamwork, and resilience both on and off the field.</p>
+    <h2>🎂 Countdown to My Birthday: <span id="countdown" class="countdown"></span></h2>
 </header>
 
 <nav>
@@ -107,12 +138,11 @@
 
 <section id="about" class="section">
     <h2>About Me</h2>
-    <p>Hi, I’m Adrean Cheruiyot! I hold a degree in Computer Science and specialize in cybersecurity. My skills include:
+    <p>Hi, I’m Adrean Cheruiyot! I specialize in cybersecurity, including:
         <ul>
             <li>Ethical hacking and penetration testing</li>
             <li>Network security and encryption</li>
             <li>Cloud computing and data protection</li>
-            <li>Full-stack development</li>
         </ul>
         In addition to my professional pursuits, I am an avid football fan and enjoy creating innovative solutions that merge creativity with technology.</p>
 </section>
@@ -120,12 +150,12 @@
 <section id="gallery" class="section">
     <h2>Gallery</h2>
     <div class="slideshow-container">
-        <img class="slides" src="C:\Users\ule msee\Downloads\adrean\WhatsApp Image 2025-01-22 at 16.00.02.jpeg" alt="Gallery Image 1">
-        <img class="slides" src="C:\Users\ule msee\Downloads\adrean\WhatsApp Image 2025-01-22 at 16.00.01.jpeg" alt="Gallery Image 2">
-        <img class="slides" src="C:\Users\ule msee\Downloads\adrean\WhatsApp Image 2025-01-22 at 16.00.00 (1).jpeg" alt="Gallery Image 3">
-        <img class="slides" src="C:\Users\ule msee\Downloads\adrean\WhatsApp Image 2025-01-22 at 15.59.59.jpeg" alt="Gallery Image 4">
-        <img class="slides" src="C:\Users\ule msee\Downloads\adrean\WhatsApp Image 2025-01-22 at 15.59.59 (1).jpeg" alt="Gallery Image 5">
-        <img class="slides" src="C:\Users\ule msee\Downloads\adrean\WhatsApp Image 2025-01-22 at 15.59.58.jpeg" alt="Gallery Image 6">
+        <img class="slides active" src="adrean/WhatsApp_Image_2025-01-22_at_16.00.02.jpeg" alt="Gallery Image 1">
+        <img class="slides" src="adrean/WhatsApp_Image_2025-01-22_at_16.00.01.jpeg" alt="Gallery Image 2">
+        <img class="slides" src="adrean/WhatsApp_Image_2025-01-22_at_16.00.00_1.jpeg" alt="Gallery Image 3">
+        <img class="slides" src="adrean/WhatsApp_Image_2025-01-22_at_15.59.59.jpeg" alt="Gallery Image 4">
+        <img class="slides" src="adrean/WhatsApp_Image_2025-01-22_at_15.59.59_1.jpeg" alt="Gallery Image 5">
+        <img class="slides" src="adrean/WhatsApp_Image_2025-01-22_at_15.59.58.jpeg" alt="Gallery Image 6">
     </div>
 </section>
 
@@ -139,7 +169,7 @@
 </section>
 
 <footer>
-    <p>&copy; 2025 Adrean Cheruiyot's Birthday Website. All rights reserved.</p>
+    <p>&copy; 2025 Adrean Cheruiyot +254727228097</p>
 </footer>
 
 </body>
